@@ -18,10 +18,16 @@ Key Features:
 5. Personal Information Update:
    MyFlix places user empowerment at its core, allowing individuals to easily update their personal information. This feature ensures a personalized experience tailored to each user's preferences.
 
-Technological Stack:
+Technologies Used
 
-- ReactJS: Leveraging the power of ReactJS for a dynamic and responsive user interface.
-  
-- Redux: Employing Redux for state management, ensuring efficient handling and presentation of movie data.
-  
-- Server-Side Integration: Seamlessly integrating with an existing server-side codebase for a unified and cohesive application architecture.
+1. Node.js
+Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. It allows you to execute JavaScript code server-side, providing a powerful platform for building scalable and performant applications.
+
+2. Express.js
+Express.js is a minimal and flexible Node.js web application framework. It simplifies the process of building robust and scalable web applications by providing a set of features for web and mobile applications.
+
+3. MongoDB
+MongoDB is a NoSQL database that stores data in flexible, JSON-like documents. It provides high performance, high availability, and easy scalability. In the myFlix API, MongoDB will be used to store movie and user data.
+
+4. RESTful API Design
+RESTful API design is an architectural style for building networked applications. It uses standard HTTP methods (GET, POST, PUT, DELETE) to perform CRUD operations (Create, Read, Update, Delete) on resources. The myFlix API will follow RESTful principles to provide a clear and consistent interface for interacting with the application.
