@@ -80,8 +80,3 @@ app.use((err, req, res, next) => {
 app.listen(8080, () => {
     console.log('My first Node test server is running on Port 8080.');
 });
-
-// set up error handling
-app.use((err, req, res, next)=>{
-    console.error(err.stack);
-  });
