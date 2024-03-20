@@ -9,8 +9,8 @@
   <title>Documentation</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&family=Inter&family=Libre+Barcode+39+Extended+Text&display=swap" rel="stylesheet">
+  <!-- Added the CSS link for Chakra Petch font -->
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -25,38 +25,39 @@
   </header>
   <main>
     <h3>Server</h3>
-    <a href="http://localhost:8080" target="_blank"><button>localhost:8080</button></a>
+    <!-- Fixed the button functionality to navigate to an external URL -->
+    <button onclick="window.location.href='https://cine-verse:443'">cine-verse:443</button>
     <h4>MOVIES: Managing movies API</h4>
     <div class="endpoints-list">
-      <div class="get">GET</div> <span>/movies</span> lists all the movies
+      <div class="get">GET</div> <span>/movies</span> Lists all the movies
     </div>
     <div class="endpoints-list">
-      <div class="get">GET</div> <span>/movies/{title}</span> lists all data about a movie by the title
+      <div class="get">GET</div> <span>/movies/{Title}</span> Lists all data about a movie by the title
     </div>
     <div class="endpoints-list">
-      <div class="get">GET</div> <span>/movies/genre/{genre}</span> lists all the movie titles with a specific genre
+      <div class="get">GET</div> <span>/movies/genres/{Genre}</span> Lists all the movie titles with a specific genre
     </div>
     <div class="endpoints-list">
-      <div class="get">GET</div> <span>/movies/director/{directorName}</span> lists data about a director
+      <div class="get">GET</div> <span>/movies/directors/{Director Name}</span> Lists data about a director
+    </div>
+    <h4>USERS: Managing users API</h4>
+    <div class="endpoints-list">
+      <div class="get">GET</div> <span>/users</span> Lists all the users
     </div>
     <div class="endpoints-list">
-      <div class="get">GET</div> <span>/users</span> lists all the users
+      <div class="post">POST</div> <span>/users</span> Create a new user
     </div>
     <div class="endpoints-list">
-      <div class="post">POST</div> <span>/users</span> create a new user
+      <div class="put">PUT</div> <span>/users/{UserName}</span> Update user name using the UserName
     </div>
     <div class="endpoints-list">
-      <div class="put">PUT</div> <span>/users/{id}</span> update user name using the id
+      <div class="delete">DELETE</div> <span>/users/{id}</span> Remove user from the list
     </div>
     <div class="endpoints-list">
-      <div class="delete">DELETE</div> <span>/users/{id}</span> remove user from the list
+      <div class="post">POST</div> <span>/users/{UserName}/movies/{Title}</span> Add a movie to the user's favorite movies list
     </div>
     <div class="endpoints-list">
-      <div class="post">POST</div> <span>/users/{id}/{movieTitle}</span> add a movie to the user's favorite movies list
-    </div>
-    <div class="endpoints-list">
-      <div class="delete">DELETE</div> <span>/users/{id}/{movieTitle}</span> delete a movie from the user's favorite
-      movies list
+      <div class="delete">DELETE</div> <span>/users/{UserName}/movies/{Title}</span> Delete a movie from the user's favorite movies list
     </div>
   </main>
 </body>
