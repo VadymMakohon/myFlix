@@ -1,19 +1,34 @@
-const { error } = require('console');
-const express = require('express'),
-uuid = require('uuid'),
-bodyParser = require('body-parser'),
-morgan = require('morgan');
+const express = require('express');
+const uuid = require('uuid');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+
 const app = express();
 
-// Logging midleware
+// Logging middleware
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
+// User data
+let users = [
+    {
+        id: uuid.v4(),
+        name: 'Vadym Makohon',
+        favoriteMovies: ['The Mask', 'Jaws']
+    },
+    {
+        id: uuid.v4(),
+        name: 'Jane Smith',
+        favoriteMovies: ['Titanic', 'Avatar']
+    },
+    // Add more user objects as needed
+];
+
 // Movie data
-let topTenMovies = [
+const topMovies = [
     {
         id:1,
-        title: 'The mask',
+        title: 'The Mask',
         director: 'Andrew Hebert',
         releaseYear: '1994',
         genre: 'Comedy'
@@ -30,14 +45,14 @@ let topTenMovies = [
         title: 'Departed',
         director: 'Martin Scorsese',
         releaseYear: '2006',
-        genre: 'Triller'
+        genre: 'Thriller' 
     }, 
     {
         id:4,
         title: 'War',
         director: 'Siddharth Anand',
         releaseYear: '2019',
-        genre: 'Triller'
+        genre: 'Thriller'
     }, 
     {
         id:5,
@@ -83,13 +98,8 @@ let topTenMovies = [
     }
 ];
 
-let myLogger = (req, res, next) => {
-    
-  app.use(myLogger);
-}
 // Welcome route
-
-  app.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Welcome to myFlix API!');
 });
 
@@ -99,121 +109,119 @@ app.get('/users', (req, res) => {
 });
 
 // CREATE
-app.post('/users', (req, res)=>{
+app.post('/users', (req, res) => {
     const newUser = req.body;
-    if (newUser.name){
+    if (newUser.name) {
         newUser.id = uuid.v4();
         users.push(newUser);
-
         res.status(201).json(newUser);
-    } else{
+    } else {
         res.status(400).send('users need names');
-    } 
+    }
 });
 
 // UPDATE
-app.put('/users/:id', (req, res)=>{
+app.put('/users/:id', (req, res) => {
     const { id } = req.params;
     const updatedUser = req.body;
 
-    let user = users.find( user => user.id == id);
+    let user = users.find(user => user.id == id);
 
-    if (user){
+    if (user) {
         user.name = updatedUser.name;
         res.status(200).json(user);
-    } else{
+    } else {
         res.status(400).send('no such user');
     }
 });
 
 // CREATE
-app.post('/users/:id/:movieTitle', (req, res)=>{
+app.post('/users/:id/:movieTitle', (req, res) => {
     const { id, movieTitle } = req.params;
 
-    let user = users.find( user => user.id == id);
+    let user = users.find(user => user.id == id);
 
-    if (user){
-        user.favoriteMovie.push(movieTitle);
-        res.status(200).send(`${movieTitle} has been added to user ${id}\'s array`);
-    } else{
+    if (user) {
+        user.favoriteMovies.push(movieTitle);
+        res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);
+    } else {
         res.status(400).send('no such user');
     }
 });
 
 // DELETE
-app.delete('/users/:id/:movieTitle', (req, res)=>{
+app.delete('/users/:id/:movieTitle', (req, res) => {
     const { id, movieTitle } = req.params;
 
-    let user = users.find( user => user.id == id);
+    let user = users.find(user => user.id == id);
 
-    if (user){
-        user.favoriteMovie = user.favoriteMovie.filter( title => title !== movieTitle);
-        res.status(200).send(`${movieTitle} has been removed from user ${id}\'s array`);
-    } else{
+    if (user) {
+        user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle);
+        res.status(200).send(`${movieTitle} has been removed from user ${id}'s array`);
+    } else {
         res.status(400).send('no such user');
     }
 });
 
 // DELETE
-app.delete('/users/:id/', (req, res)=>{
+app.delete('/users/:id/', (req, res) => {
     const { id } = req.params;
 
-    let user = users.find( user => user.id == id);
+    let user = users.find(user => user.id == id);
 
-    if (user){
-        users = users.filter( user => user.id != id);
+    if (user) {
+        users = users.filter(user => user.id != id);
         res.status(200).send(`user ${id} has been deleted`);
-    } else{
+    } else {
         res.status(400).send('no such user');
     }
 });
 
-// Movie route
-app.get( '/movies', (req, res) => {
+// READ   --  Movies route
+app.get('/movies', (req, res) => {
     res.status(200).json(topMovies);
 });
 
 // READ 
-app.get('/movies/:title', (req, res) =>{
+app.get('/movies/:title', (req, res) => {
     const { title } = req.params;
-    const movie = topMovies.find( movie => movie.Title === title );
+    const movie = topMovies.find(movie => movie.title.toLowerCase() === title.toLowerCase()); // Case-insensitive search
 
-    if( movie) {
-    res.status(200).json(movie);
+    if (movie) {
+        res.status(200).json(movie);
     } else {
-    res.status(400).send('no such title found')
+        res.status(400).send('no such title found');
     }
 });
 
 // READ 
-app.get('/movies/genre/:genre', (req, res) =>{
+app.get('/movies/genre/:genre', (req, res) => {
     const { genre } = req.params;
-    const genreName = topMovies.find( movie => movie.Genre === genre ).Title;
+    const genreMovies = topMovies.filter(movie => movie.genre === genre);
 
-    if( genreName) {
-    res.status(200).json(genreName);
+    if (genreMovies.length > 0) {
+        res.status(200).json(genreMovies);
     } else {
-    res.status(400).send('no such genre found')
+        res.status(400).send('no movies found for this genre');
     }
 });
 
 // READ 
-app.get('/movies/director/:directorName', (req, res) =>{
+app.get('/movies/director/:directorName', (req, res) => {
     const { directorName } = req.params;
-    const director = topMovies.find( movie => movie.Director.Name ===
-directorName ).Director;
+    const directorMovies = topMovies.filter(movie => movie.director === directorName);
 
- if( director) {
-    res.status(200).json(director);
+    if (directorMovies.length > 0) {
+        res.status(200).json(directorMovies);
     } else {
-    res.status(404).send('no such director')
+        res.status(404).send('no movies found for this director');
     }
 });
 
-//Static file
-app.use('/documentation', express.static('public', {index: 'documentation.html'}));
+// Static file
+app.use('/documentation', express.static('public', { index: 'documentation.html' }));
 
-// Error handling midleware
+// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something went wrong!');
