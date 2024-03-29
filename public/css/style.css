@@ -1,78 +1,78 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+body{
+    font-family: 'Lucida Grande', sans-serif;
 }
 
 header{
-  display: block;
-  margin: 24px;
-  padding: 16px;
+    display: block;
+    margin: 24px;
+    padding: 16px;
 }
 main{
-  display: block;
-  margin: 24px;
-  padding: 16px;
+    display: block;
+    margin: 24px;
+    padding: 16px;
 }
 h1{
-  font-family:'Inter', sans-serif;
-  color: rgb(24, 56, 96) ;
+    font-family:'Inter', sans-serif;
+    color: rgb(24, 56, 96) ;
 }
 h3{
-  display: inline;
+    display: inline;
 }
 button{
-  display: inline;
-  padding: 4px;
-  border-radius: 4px;
-  border: 1px solid black;
+    display: inline;
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid black;
 }
 
 span{
-  font-family: 'Chakra Petch', sans-serif;
-  font-weight: 600;
-  margin: 0 32px 0px 6px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 600;
+    margin: 0 32px 0px 6px;
 }
 
 .endpoints-list{
-  color: rgb(68, 68, 68);
-  font-size: 15px;
-  margin: 8px;
-  padding: 16px;
-  border: 1px solid rgb(146, 146, 146);
-  border-radius: 4px;
-  background-color: rgb(230, 242, 255);
-
+    color: rgb(68, 68, 68);
+    font-size: 15px;
+    margin: 8px;
+    padding: 16px;
+    border: 1px solid rgb(146, 146, 146);
+    border-radius: 4px;
+    background-color: rgb(230, 242, 255);
+  
 
 }
 .get{
-  display: inline;
-  background-color: rgb(48, 113, 192);
-  color: white;
-  border-radius: 4px;
-  padding: 4px;
-
+    display: inline;
+    background-color: rgb(48, 113, 192);
+    color: white;
+    border-radius: 4px;
+    padding: 4px;
+  
 }
 .post{
-  display: inline;
-  background-color: rgb(8, 177, 129);
-  color: white;
-  border-radius: 4px;
-  padding: 4px;
-
+    display: inline;
+    background-color: rgb(8, 177, 129);
+    color: white;
+    border-radius: 4px;
+    padding: 4px;
+  
 }
 .put{
-  display: inline;
-  background-color: rgb(235, 160, 84);
-  color: white;
-  border-radius: 4px;
-  padding: 4px;
-
+    display: inline;
+    background-color: rgb(235, 160, 84);
+    color: white;
+    border-radius: 4px;
+    padding: 4px;
+  
 }
 .delete{
-  display: inline;
-  background-color: rgb(235, 112, 84);
-  color: white;
-  border-radius: 4px;
-  padding: 4px;
-
+    display: inline;
+    background-color: rgb(235, 112, 84);
+    color: white;
+    border-radius: 4px;
+    padding: 4px;
+  
 }
