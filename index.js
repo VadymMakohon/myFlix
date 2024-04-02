@@ -7,11 +7,18 @@ const Models = require("./models");
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect("mongodb://localhost:27017/cfDB", {
-useNewUrlParser: true,
-useUnifiedTopology: true,
-});
-
+//mongoose.connect("mongodb://localhost:27017/cfDB", {
+//useNewUrlParser: true,
+//useUnifiedTopology: true,
+//});
+mongoose.connect('mongodb://localhost:27017/cfDB')
+  .then(() => {
+    console.log('Connected to MongoDB'); 
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error); 
+  });
+  
 // Middleware for parsing requests
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -44,17 +51,17 @@ app.put("/users/:Username", async (req, res) => {
 //Add a user
 
 app.post("/users", async (req, res) => {
+  //let hashedPassword = Users.hashPassword(req.body.Password)
     await Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
           //If the user is found, send a response that it already exists
-        //  return res.status(400).send(req.body.Username + ' already exists');
-        console.log(user);
+        return res.status(400).send(req.body.Username + ' already exists');
         } else {
           Users
             .create({
               Username: req.body.Username,
-              Password: hashedPassword,
+              Password: req.body.Password,
               Email: req.body.Email,
               Birthday: req.body.Birthday
             })
