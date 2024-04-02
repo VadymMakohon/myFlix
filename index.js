@@ -30,7 +30,8 @@ app.put("/users/:Username", async (req, res) => {
         },
       },
       { new: true }
-      ) // This line makes sure that the updated document is returned
+      ) 
+      // This line makes sure that the updated document is returned
         .then((updatedUser) => {
           res.json(updatedUser);
         })
@@ -46,14 +47,17 @@ app.post("/users", async (req, res) => {
     await Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
-          return res.status(400).send(req.body.Username + "already exists");
+          //If the user is found, send a response that it already exists
+        //  return res.status(400).send(req.body.Username + ' already exists');
+        console.log(user);
         } else {
-          Users.create({
-            Username: req.body.Username,
-            Password: req.body.Password,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday,
-          })
+          Users
+            .create({
+              Username: req.body.Username,
+              Password: hashedPassword,
+              Email: req.body.Email,
+              Birthday: req.body.Birthday
+            })
             .then((user) => {
               res.status(201).json(user);
             })
@@ -104,12 +108,12 @@ app.post("/users/:Username/movies/:MovieID", async (req, res) => {
 //delete
 
 app.delete("/users/:Username", (req, res) => {
-    Users.findOneAndRemove({ Username: req.params.userName })
+    Users.findOneAndRemove({ Username: req.params.Username })
       .then((user) => {
         if (!user) {
-          res.status(400).send(req.params.userName + " was not found");
+          res.status(400).send(req.params.Username + " was not found");
         } else {
-          res.status(200).send(req.params.userName + " was deleted");
+          res.status(200).send(req.params.Username + " was deleted");
         }
       })
       .catch((err) => {
