@@ -10,12 +10,12 @@ ExtractJWT = passportJWT.ExtractJwt;
 passport.use(
     new LocalStrategy(
         {
-            usernameField: 'UserName',
+            usernameField: 'Username',
             passwordField: 'Password',
         },
         async (username, password, callback) => {
             console.log(`${username} ${password}`);
-            await Users.findOne({ UserName: username})
+            await Users.findOne({ Username: username})
             .then((user) =>{
                 if (!user) {
                     console.log('incorect username');
