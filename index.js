@@ -3,27 +3,36 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const uuid = require("uuid");
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 const cors = require("cors");
-app.use(cors());
 const passport = require("passport");
-require("./passport");
 const mongoose = require("mongoose");
 const Models = require("./models.js");
 const Users = Models.User;
 
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.static("public"));
+app.use(morgan("common"));
+
+// Passport configuration
+require("./passport");
+
+// Database connection
 mongoose.connect("mongodb://localhost:27017/cfDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
+// Route handler for the root URL
+app.get("/", (req, res) => {
+  res.send("Welcome to my movie app!"); // You can customize the response message here
+});
+
 // Import auth routes and apply them
 const authRoutes = require("./auth");
 authRoutes(app);
-
-app.use(express.static("public"));
-app.use(morgan("common"));
 
 const { check, validationResult } = require("express-validator");
 
@@ -34,7 +43,7 @@ app.get(
   async (req, res) => {
     await Users.find()
       .then((users) => {
-        res.status(201).json(users);
+        res.status(200).json(users);
       })
       .catch((err) => {
         console.error(err);
@@ -42,8 +51,8 @@ app.get(
       });
   }
 );
+
 // CREATE user
-// CREATE
 app.post(
   "/users",
   [
@@ -61,16 +70,16 @@ app.post(
       return res.status(422).json({ errors: errors.array() });
     }
     let hashedPassword = Users.hashPassword(req.body.Password);
-    await Users.findOne({ UserName: req.body.UserName })
+    await Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
-          return res.status(400).send(req.body.UserName + " already exists");
+          return res.status(400).send(req.body.Username + " already exists");
         } else {
           Users.create({
             Username: req.body.UserName,
             Password: hashedPassword,
             Email: req.body.Email,
-            Birthdate: req.body.Birthday
+            Birthdate: req.body.Birthdate
           })
             .then((user) => {
               res.status(201).json(user);
@@ -110,10 +119,10 @@ app.put(
       { username: req.params.username },
       {
         $set: {
-          username: req.body.username,
-          password: req.body.password,
-          email: req.body.email,
-          birthdate: req.body.birthdate,
+          Username: req.body.username,
+          Password: req.body.password,
+          Email: req.body.email,
+          Birthdate: req.body.birthdate,
           favoriteMovie: req.body.favoriteMovie
         }
       },
