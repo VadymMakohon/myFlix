@@ -8,6 +8,7 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const Models = require("./models.js");
 const Users = Models.User;
+const Movies = Models.Movie
 
 // Middleware
 app.use(express.json());
@@ -76,7 +77,7 @@ app.post(
           return res.status(400).send(req.body.Username + " already exists");
         } else {
           Users.create({
-            Username: req.body.UserName,
+            Username: req.body.Username,
             Password: hashedPassword,
             Email: req.body.Email,
             Birthdate: req.body.Birthdate
