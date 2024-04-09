@@ -1,34 +1,71 @@
-const express = require("express");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
-const uuid = require("uuid");
-const app = express();
-const cors = require("cors");
-const passport = require("passport");
+// Require necessary modules
 const mongoose = require("mongoose");
 const Models = require("./models.js");
+const { check, validationResult } = require("express-validator");
+const Movies = Models.Movie;
 const Users = Models.User;
-const Movies = Models.Movie
-
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-app.use(express.static("public"));
-app.use(morgan("common"));
-
-// Passport configuration
-require("./passport");
 
 // Database connection
-mongoose.connect("mongodb://localhost:27017/cfDB", {
+
+// mongoose.connect("mongodb://localhost:27017/cfDB", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
+
+// Mongoose connection to database for CRUD operations
+//For online host
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
-// Route handler for the root URL
+// Express and morgan
+const express = require("express");
+const morgan = require("morgan");
+const app = express();
+
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//use CORS
+const cors = require("cors");
+app.use(cors());
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) { // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn`t allow access from origin ' + origin;
+      return callback(new Error(message), false);
+    }
+    return callback(null, true);
+  }
+}));
+
+//use Auth.js
+let auth = require("./auth")(app);
+
+//express to return all static files in public folder
+app.use(express.static("public"));
+
+//morgan for logging
+app.use(morgan("common"));
+
+//use Passport
+const passport = require("passport");
+require("./passport");
+
+const Genres = Models.Genre;
+const Directors = Models.Director;
+
+const uuid = require("uuid");
+
+const { title } = require("process");
+
+// Welcome page
 app.get("/", (req, res) => {
-  res.send("Welcome to my movie app!"); // You can customize the response message here
+  res.send("Hello and welcome to my movie app!");
 });
 
 // Import auth routes and apply them
