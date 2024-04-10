@@ -14,7 +14,7 @@ const Users = Models.User;
 
 // Mongoose connection to database for CRUD operations
 //For online host
-mongoose.connect(process.env.CONNECTION_URI, {
+mongoose.connect("process.env.CONNECTION_URI", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
