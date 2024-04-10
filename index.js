@@ -72,8 +72,6 @@ app.get("/", (req, res) => {
 const authRoutes = require("./auth");
 authRoutes(app);
 
-const { check, validationResult } = require("express-validator");
-
 // GET users list
 app.get(
   "/users",
