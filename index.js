@@ -7,17 +7,17 @@ const Users = Models.User;
 
 // Database connection
 
-// mongoose.connect("mongodb://localhost:27017/cfDB", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
+mongoose.connect("mongodb://localhost:27017/cfDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 // Mongoose connection to database for CRUD operations
 //For online host
-mongoose.connect("process.env.CONNECTION_URI", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// //mongoose.connect(process.env.CONNECTION_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,//
+// });//
 
 // Express and morgan
 const express = require("express");
