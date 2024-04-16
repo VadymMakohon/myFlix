@@ -16,8 +16,7 @@ const Users = Models.User;
 // For online host
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,//
-});
+  useUnifiedTopology: true, });
 
 // Express and morgan
 const express = require("express");
