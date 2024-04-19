@@ -16,7 +16,8 @@ const Users = Models.User;
 // For online host
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true, });
+  useUnifiedTopology: true,
+});
 
 // Express and morgan
 const express = require("express");
@@ -234,7 +235,6 @@ app.delete(
 // GET all movies
 app.get(
   "/movies",
-  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Movies.find()
       .then((movies) => {
@@ -339,7 +339,6 @@ app.get(
 // GET Directors
 app.get(
   "/directors/:directorName",
-  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Directors.findOne({ name: req.params.directorName })
       .then((directors) => {
