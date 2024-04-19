@@ -16,6 +16,8 @@ const Users = Models.User;
 // For online host
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
+New-branch-myFlix-API
+  useUnifiedTopology: true,
   useUnifiedTopology: true,
 });
 

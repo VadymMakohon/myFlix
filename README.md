@@ -1,4 +1,7 @@
 # myFlix
+
+https://vadymmakohon.github.io/myFlix/
+
 MyFlix is a sophisticated client-side application meticulously crafted using ReactJS to complement its robust server-side infrastructure. This highly responsive app boasts an array of features designed to provide users with an immersive and seamless movie-watching experience.
 
 Key Features:
