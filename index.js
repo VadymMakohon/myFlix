@@ -250,7 +250,7 @@ app.get(
 
 // READ   --  Director route
 app.get(
-  "/movies/directors", passport.authenticate("jwt", { session: false }),
+  "/movies/directors",
   async (req, res) => {
     await Directors.find()
       .then((directors) => {
