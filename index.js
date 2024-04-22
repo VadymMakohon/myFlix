@@ -248,21 +248,6 @@ app.get(
   }
 );
 
-// READ   --  Director route
-app.get(
-  "/movies/directors",
-  async (req, res) => {
-    await Directors.find()
-      .then((directors) => {
-        res.status(201).json(directors);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send("Error: " + err);
-      });
-  }
-);
-
 // GET movies by title name
 app.get(
   "/movies/:title",
