@@ -33,17 +33,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const cors = require("cors");
 app.use(cors());
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) { // If a specific origin isn’t found on the list of allowed origins
-      let message = 'The CORS policy for this application doesn`t allow access from origin ' + origin;
-      return callback(new Error(message), false);
-    }
-    return callback(null, true);
-  }
-}));
-
 //use Auth.js
 let auth = require("./auth")(app);
 
@@ -240,21 +229,6 @@ app.get(
     await Movies.find()
       .then((movies) => {
         res.status(201).json(movies);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send("Error: " + err);
-      });
-  }
-);
-
-// READ   --  Director route
-app.get(
-  "/movies/directors",
-  async (req, res) => {
-    await Directors.find()
-      .then((directors) => {
-        res.status(201).json(directors);
       })
       .catch((err) => {
         console.error(err);
