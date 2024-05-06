@@ -356,6 +356,21 @@ app.get(
   }
 );
 
+// POST login route
+app.post("/login", (req, res) => {
+  // Handle user authentication logic here
+  const { username, password } = req.body;
+
+  // Example authentication logic (replace this with your actual authentication logic)
+  if (username === "example" && password === "password") {
+    // Authentication successful
+    res.status(200).json({ user: { username: "example" }, token: "fakeToken" });
+  } else {
+    // Authentication failed
+    res.status(401).json({ message: "Invalid username or password" });
+  }
+});
+
 //Static file
 app.use(
   "/documentation",
