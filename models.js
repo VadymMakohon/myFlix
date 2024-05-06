@@ -7,10 +7,12 @@ let movieSchema = mongoose.Schema({
     Genre: {
         Name: { String },
         Description: { String },
+        _id: { type: mongoose.Schema.Types.ObjectId, ref: 'genres', required: true }
     },
     Director: {
         Name: { String },
         Bio: { String },
+        _id: { type: mongoose.Schema.Types.ObjectId, ref: 'directors', required: true }
     },
     image: { String },
     Featured: Boolean
@@ -18,7 +20,6 @@ let movieSchema = mongoose.Schema({
 
 
 let userSchema = mongoose.Schema({
-    _id: { type: mongoose.Schema.Types.ObjectId, ref: 'directors', required: true },
     Username: { type: String, required: true },
     Password: { type: String, required: true },
     Email: { type: String, required: true },
@@ -33,15 +34,21 @@ userSchema.statics.hashPassword = (password) => {
 
 // Function to compare hashed passsword
 userSchema.methods.validatePassword = function (password) {
-    return bcrypt.compareSync(password, this.Password);
+    return bcrypt.compareSync(password, this.password);
 };
 
 let directorSchema = mongoose.Schema({
+    _id: { type: mongoose.Schema.Types.ObjectId, ref: 'directors', required: true },
     Name: { String },
     Bio: { String },
     Birth: { type: Date },
     Death: { type: Date }
 })
+let genreSchema = mongoose.Schema({
+    _id: { type: mongoose.Schema.Types.ObjectId, ref: 'genre', required: true },
+    Name: { type: String, required: true },
+    Description: { type: String, required: true }
+});
 
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
