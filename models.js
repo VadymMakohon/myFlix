@@ -5,26 +5,23 @@ let movieSchema = mongoose.Schema({
     Title: { type: String, required: true },
     Description: { type: String, required: true },
     Genre: {
-        Name: { String },
-        Description: { String },
+        Name: String,
         _id: { type: mongoose.Schema.Types.ObjectId, ref: 'genres', required: true }
     },
     Director: {
-        Name: { String },
-        Bio: { String },
+        Name: String,
         _id: { type: mongoose.Schema.Types.ObjectId, ref: 'directors', required: true }
     },
-    image: { String },
-    Featured: Boolean
+    Featured: Boolean,
+    image: { type: String, required: true },
 });
 
-
 let userSchema = mongoose.Schema({
-    Username: { type: String, required: true },
-    Password: { type: String, required: true },
-    Email: { type: String, required: true },
-    Birthdate: Date,
-    FavoriteMovies: [{ type: String, required: true }],
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true },
+    birthDate: Date,
+    favouriteMovies: [{ type: String, ref: 'Movie' }]
 
 });
 // Function to hash password
@@ -39,10 +36,10 @@ userSchema.methods.validatePassword = function (password) {
 
 let directorSchema = mongoose.Schema({
     _id: { type: mongoose.Schema.Types.ObjectId, ref: 'directors', required: true },
-    Name: { String },
-    Bio: { String },
-    Birth: { type: Date },
-    Death: { type: Date }
+    Name: { type: String, required: true },
+    Bio: { type: String, required: true },
+    birthDate: Date,
+    DeathDate: Date
 })
 let genreSchema = mongoose.Schema({
     _id: { type: mongoose.Schema.Types.ObjectId, ref: 'genre', required: true },
