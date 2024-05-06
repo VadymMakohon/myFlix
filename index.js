@@ -115,10 +115,10 @@ app.post(
           return res.status(400).send(req.body.Username + " already exists");
         } else {
           Users.create({
-            Username: req.body.Username,
-            Password: hashedPassword,
-            Email: req.body.Email,
-            Birthdate: req.body.Birthdate
+            username: req.body.Username,
+            password: hashedPassword,
+            email: req.body.Email,
+            birthdate: req.body.Birthdate
           })
             .then((user) => {
               res.status(201).json(user);
@@ -158,10 +158,10 @@ app.put(
       { username: req.params.username },
       {
         $set: {
-          Username: req.body.username,
-          Password: req.body.password,
-          Email: req.body.email,
-          Birthdate: req.body.birthdate,
+          username: req.body.username,
+          password: req.body.password,
+          email: req.body.email,
+          birthdate: req.body.birthdate,
           favoriteMovie: req.body.favoriteMovie
         }
       },
@@ -310,11 +310,11 @@ app.post(
         return res.status(400).json({ message: "Director not found" });
       }
       const newMovie = await Movies.create({
-        Title: title,
-        Description: description,
-        Genre: { name: genre },
-        Director: {
-          Name: directorObject.Name,
+        title: title,
+        description: description,
+        genre: { name: genre },
+        director: {
+          name: directorObject.Name,
           _id: directorObject._id
         },
         Featured: featured
