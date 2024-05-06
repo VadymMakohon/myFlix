@@ -1,29 +1,30 @@
-const jwtSecret = 'your_jwt_secret';
-const jwt = require('jsonwebtoken'),
-    passport = require('passport');
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
 require('./passport');
+
+const jwtSecret = process.env.JWT_SECRET || 'your_jwt_secret'; // Use environment variable or fallback to hardcoded secret
 
 let generateJWTToken = (user) => {
     return jwt.sign(user, jwtSecret, {
         subject: user.Username,
-        expiresIn: '7d',
+        expiresIn: '7d', // Adjust expiry time based on your requirements
         algorithm: 'HS256'
     });
 }
 
-//POST login.
 module.exports = (router) => {
     router.post('/login', (req, res) => {
         passport.authenticate('local', { session: false }, (error, user, info) => {
             if (error || !user) {
                 return res.status(400).json({
-                    message: 'Something is not right' + info + " " + error,
-                    user: user
+                    message: 'Invalid credentials or something went wrong during authentication.',
+                    error: error, // Send error for debugging purposes
+                    info: info // Send additional info for debugging purposes
                 });
             }
             req.login(user, { session: false }, (error) => {
                 if (error) {
-                    res.send(error);
+                    return res.status(500).json({ message: 'Internal server error' });
                 }
                 let token = generateJWTToken(user.toJSON());
                 return res.json({ user, token });
