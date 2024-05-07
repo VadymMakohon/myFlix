@@ -5,7 +5,19 @@ const express = require("express"),
   app = express();
 const cors = require('cors');
 
-app.use(cors());
+const allowedOrigins = ['http://localhost:1234']; // Add your frontend origin(s) here
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Check if the request origin is in the allowedOrigins array
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
