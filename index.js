@@ -67,19 +67,13 @@ app.get("/users", passport.authenticate('jwt', { session: false }), async (req, 
 });
 
 // CREATE user
-app.post(
-  "/users",
-  [
-    check("Username", "Username is required").isLength({ min: 5 }),
-    check(
-      "Username",
-      "Username contains non alphanumeric characters - not allowed."
-    ).isAlphanumeric(),
-    check("Email", "Email does not appear to be valid").isEmail()
-  ],
+app.post("/users", [
+  check("Username", "Username is required").isLength({ min: 5 }),
+  check("Username", "Username contains non alphanumeric characters - not allowed.").isAlphanumeric(),
+  check("Email", "Email does not appear to be valid").isEmail()
+],
   async (req, res) => {
     let errors = validationResult(req);
-
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
