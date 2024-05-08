@@ -13,7 +13,7 @@ require("./passport");
 app.use(express.static("public"));
 app.use(morgan("common"));
 const mongoose = require("mongoose");
-const Models = require("./models.js");
+const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 const Directors = Models.Director;
