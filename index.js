@@ -1,7 +1,6 @@
 const express = require("express"),
   morgan = require("morgan"),
   bodyParser = require("body-parser"),
-  uuid = require("uuid"),
   app = express();
 const cors = require('cors');
 
@@ -44,7 +43,7 @@ app.use(express.static("public"));
 app.use(morgan("common"));
 
 const { title } = require("process");
-
+const uuid = require("uuid");
 // Import auth routes and apply them
 const authRoutes = require("./auth");
 authRoutes(app);
