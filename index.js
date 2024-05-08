@@ -9,7 +9,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-let auth = require("./auth")(app);
 const passport = require("passport");
 require("./passport");
 app.use(express.static("public"));
@@ -43,8 +42,6 @@ app.use(express.static("public"));
 
 //morgan for logging
 app.use(morgan("common"));
-
-const uuid = require("uuid");
 
 const { title } = require("process");
 
