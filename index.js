@@ -44,10 +44,6 @@ app.use(express.static("public"));
 //morgan for logging
 app.use(morgan("common"));
 
-//use Passport
-const passport = require("passport");
-require("./passport");
-
 const uuid = require("uuid");
 
 const { title } = require("process");
