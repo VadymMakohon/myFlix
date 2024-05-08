@@ -55,5 +55,4 @@ passport.use(new JWTStrategy(
                 return callback(err);
             });
     }
-)
-);
+));
