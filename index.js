@@ -87,10 +87,10 @@ app.post(
           return res.status(400).send(req.body.Username + " already exists");
         } else {
           Users.create({
-            username: req.body.Username,
-            password: hashedPassword,
-            email: req.body.Email,
-            birthdate: req.body.Birthdate
+            Username: req.body.Username,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            Birthdate: req.body.Birthdate
           })
             .then((user) => {
               res.status(201).json(user);
