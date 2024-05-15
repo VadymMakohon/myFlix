@@ -21,15 +21,15 @@ const Genres = Models.Genre;
 const { check, validationResult } = require("express-validator");
 
 //Database connection
-mongoose.connect("mongodb://localhost:27017/cfDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-// mongoose.connect(process.env.CONNECTION_URI, {
+// mongoose.connect("mongodb://localhost:27017/cfDB", {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true
 // });
+
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 // Welcome page
 app.get("/", (req, res) => {
