@@ -30,6 +30,8 @@ const { check, validationResult } = require("express-validator");
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
+}).catch(error => {
+  console.error('MongoDB connection error:', error);
 });
 
 // Welcome page
