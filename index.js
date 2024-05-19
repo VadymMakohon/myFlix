@@ -27,12 +27,21 @@ const { check, validationResult } = require("express-validator");
 //   useUnifiedTopology: true
 // });
 
-mongoose.connect(process.env.CONNECTION_URI, {
+// Make sure CONNECTION_URI is properly defined in your environment configuration
+const CONNECTION_URI = process.env.CONNECTION_URI;
+
+// Connect to MongoDB using Mongoose
+mongoose.connect(CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}).catch(error => {
-  console.error('MongoDB connection error:', error);
-});
+})
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch(error => {
+    console.error('MongoDB connection error:', error);
+  });
+
 
 // Welcome page
 app.get("/", (req, res) => {
