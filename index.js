@@ -119,11 +119,10 @@ app.post(
 
 // UPDATE/PUT user info
 app.put(
-  "/users/:username",
+  "/users/:userid",
   [
     check("Username", "Username is required").notEmpty(),
-    check(
-      "Username",
+    check("Username",
       "Username contains non alphanumeric characters - not allowed."
     ).isAlphanumeric(),
     check("Password", "Password is required").notEmpty(),
@@ -136,14 +135,14 @@ app.put(
       return res.status(422).json({ errors: errors.array() });
     }
     await Users.findOneAndUpdate(
-      { username: req.params.username },
+      { _id: req.params.userid },
       {
         $set: {
-          username: req.body.username,
-          password: req.body.password,
-          email: req.body.email,
-          birthdate: req.body.birthdate,
-          favoriteMovie: req.body.favoriteMovie
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthdate: req.body.Birthdate,
+          FavoriteMovie: req.body.FavoriteMovie
         }
       },
       { new: true }
