@@ -35,7 +35,7 @@ passport.use(
                         console.log(error);
                         return callback(error);
                     }
-                });
+                })
         }
     )
 );
