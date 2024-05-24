@@ -100,7 +100,7 @@ app.post(
             Password: hashedPassword,
             Email: req.body.Email,
             Birthdate: req.body.Birthdate,
-            FavouriteMovie: req.body.FavouriteMovie,
+            FavoriteMovie: req.body.FavoriteMovie,
           })
             .then((user) => {
               res.status(201).json(user);
