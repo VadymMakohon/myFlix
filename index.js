@@ -78,10 +78,7 @@ app.post(
   "/users",
   [
     check("Username", "Username is required").isLength({ min: 5 }),
-    check(
-      "Username",
-      "Username contains non alphanumeric characters - not allowed."
-    ).isAlphanumeric(),
+    check("Username", "Username contains non-alphanumeric characters - not allowed.").isAlphanumeric(),
     check("Email", "Email does not appear to be valid").isEmail()
   ],
   async (req, res) => {
@@ -100,7 +97,7 @@ app.post(
             Password: hashedPassword,
             Email: req.body.Email,
             Birthdate: req.body.Birthdate,
-            FavoriteMovie: req.body.FavoriteMovie,
+            favoriteMovies: [] // Initialize as an empty array
           })
             .then((user) => {
               res.status(201).json(user);
@@ -123,9 +120,7 @@ app.put(
   "/users/:userid",
   [
     check("Username", "Username is required").notEmpty(),
-    check("Username",
-      "Username contains non alphanumeric characters - not allowed."
-    ).isAlphanumeric(),
+    check("Username", "Username contains non-alphanumeric characters - not allowed.").isAlphanumeric(),
     check("Password", "Password is required").notEmpty(),
     check("Email", "Email does not appear to be valid").isEmail()
   ],
@@ -143,7 +138,7 @@ app.put(
           Password: req.body.Password,
           Email: req.body.Email,
           Birthdate: req.body.Birthdate,
-          FavoriteMovie: req.body.FavoriteMovie
+          favoriteMovies: req.body.favoriteMovies // Ensure correct field name
         }
       },
       { new: true }
@@ -157,14 +152,15 @@ app.put(
       });
   }
 );
+
 // CREATE user's Fav movie
 app.post(
-  "/users/:username/movies/:movieName",
+  "/users/:username/movies/:movieId",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Users.findOneAndUpdate(
-      { username: req.params.username },
-      { $push: { favoriteMovies: req.params.movieName } },
+      { Username: req.params.username },
+      { $push: { favoriteMovies: req.params.movieId } }, // Ensure movieId is pushed to favoriteMovies array
       { new: true }
     )
       .then((updatedUser) => {
@@ -199,12 +195,12 @@ app.delete(
 
 // DELETE Fav movie by moviename
 app.delete(
-  "/users/:username/movies/:name",
+  "/users/:username/movies/:movieId",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Users.findOneAndUpdate(
-      { username: req.params.username },
-      { $pull: { favoriteMovies: req.params.name } },
+      { Username: req.params.username },
+      { $pull: { favoriteMovies: req.params.movieId } }, // Ensure movieId is removed from favoriteMovies array
       { new: true }
     )
       .then((updatedUser) => {
