@@ -1,5 +1,3 @@
-
-
 # Contributors Code of Conduct
 
 ## Our Pledge
