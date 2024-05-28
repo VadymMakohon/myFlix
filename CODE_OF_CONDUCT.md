@@ -1,6 +1,6 @@
 
 
-# Contributor Covenant Code of Conduct
+# Contributors Code of Conduct
 
 ## Our Pledge
 
