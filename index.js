@@ -160,7 +160,7 @@ app.post(
   async (req, res) => {
     await Users.findOneAndUpdate(
       { Username: req.params.username },
-      { $push: { favoriteMovies: req.params.movieId } }, // Ensure movieId is pushed to favoriteMovies array
+      { $push: { FavoriteMovies: req.params.movieId } }, // Ensure movieId is pushed to favoriteMovies array
       { new: true }
     )
       .then((updatedUser) => {
