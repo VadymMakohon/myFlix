@@ -175,15 +175,15 @@ app.post(
 
 // DELETE user by username
 app.delete(
-  "/users/:username",
+  "/users/:id",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    await Users.findOneAndDelete({ username: req.params.username })
+    await Users.findOneAndDelete({ _id: req.params.id })
       .then((user) => {
         if (!user) {
-          res.status(400).send(req.params.username + " was not found");
+          res.status(400).send("user with id " + req.params.id + " was not found");
         } else {
-          res.status(200).send(req.params.username + " was deleted.");
+          res.status(200).send("user with id " + req.params.id + " was deleted.");
         }
       })
       .catch((err) => {
