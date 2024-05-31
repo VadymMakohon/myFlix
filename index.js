@@ -97,7 +97,7 @@ app.post(
             Password: hashedPassword,
             Email: req.body.Email,
             Birthdate: req.body.Birthdate,
-            favoriteMovies: [] // Initialize as an empty array
+            FavoriteMovies: [] // Initialize as an empty array
           })
             .then((user) => {
               res.status(201).json(user);
