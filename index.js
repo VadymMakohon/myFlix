@@ -200,7 +200,7 @@ app.delete(
   async (req, res) => {
     await Users.findOneAndUpdate(
       { Username: req.params.username },
-      { $pull: { favoriteMovies: req.params.movieId } }, // Ensure movieId is removed from favoriteMovies array
+      { $pull: { FavoriteMovies: req.params.movieId } }, // Ensure movieId is removed from FavoriteMovies array
       { new: true }
     )
       .then((updatedUser) => {
