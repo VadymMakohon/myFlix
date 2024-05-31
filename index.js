@@ -278,6 +278,25 @@ app.get(
   }
 );
 
+// GET user's favorite movies
+app.get(
+  "/users/:username/movies",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const user = await Users.findOne({ Username: req.params.username }).populate('FavoriteMovies');
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+      res.status(200).json(user.FavoriteMovies);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    }
+  }
+);
+
+
 // CREATE a new movie
 app.post(
   "/movies",
