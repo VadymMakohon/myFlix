@@ -319,7 +319,7 @@ app.post(
           _id: directorObject._id
         },
         Featured: featured,
-        ImageUrl: imageUrl
+        ImagePath: imagePath
       });
 
       res.status(201).json(newMovie);
