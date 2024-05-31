@@ -284,7 +284,10 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
-      const user = await Users.findOne({ Username: req.params.username }).populate('FavoriteMovies');
+      const user = await Users.findOne({ Username: req.params.username }).populate({
+        path: 'FavoriteMovies',
+        select: 'Title Description Genre Director ImagePath Featured' // Include necessary fields
+      });
       if (!user) {
         return res.status(404).send("User not found");
       }
@@ -296,16 +299,15 @@ app.get(
   }
 );
 
-
 // CREATE a new movie
 app.post(
   "/movies",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const { title, description, genre, director, featured } = req.body;
+    const { title, description, genre, director, imagePath, featured } = req.body;
     try {
       // Find the director's ID based on the director's name
-      const directorObject = await Directors.findOne({ name: director });
+      const directorObject = await Directors.findOne({ Name: director });
 
       if (!directorObject) {
         return res.status(400).json({ message: "Director not found" });
@@ -313,13 +315,13 @@ app.post(
       const newMovie = await Movies.create({
         Title: title,
         Description: description,
-        Genre: { name: genre },
+        Genre: { Name: genre },
         Director: {
           Name: directorObject.Name,
           _id: directorObject._id
         },
-        Featured: featured,
-        ImagePath: imagePath
+        ImagePath: imagePath,
+        Featured: featured
       });
 
       res.status(201).json(newMovie);
