@@ -284,10 +284,7 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
-      const user = await Users.findOne({ Username: req.params.username }).populate({
-        path: 'FavoriteMovies',
-        select: 'Title Description Genre Director ImagePath Featured' // Include necessary fields
-      });
+      const user = await Users.findOne({ Username: req.params.username }).populate('FavoriteMovies');
       if (!user) {
         return res.status(404).send("User not found");
       }
