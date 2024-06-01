@@ -34,3 +34,6 @@ MongoDB is a NoSQL database that stores data in flexible, JSON-like documents. I
 
 4. RESTful API Design
 RESTful API design is an architectural style for building networked applications. It uses standard HTTP methods (GET, POST, PUT, DELETE) to perform CRUD operations (Create, Read, Update, Delete) on resources. The myFlix API will follow RESTful principles to provide a clear and consistent interface for interacting with the application.
+
+# Contributors
+- [Vadym Makohon](https://github.com/VadymMakohon)

@@ -97,7 +97,7 @@ app.post(
             Password: hashedPassword,
             Email: req.body.Email,
             Birthdate: req.body.Birthdate,
-            favoriteMovies: [] // Initialize as an empty array
+            FavoriteMovies: [] // Initialize as an empty array
           })
             .then((user) => {
               res.status(201).json(user);
@@ -200,7 +200,7 @@ app.delete(
   async (req, res) => {
     await Users.findOneAndUpdate(
       { Username: req.params.username },
-      { $pull: { FavoriteMovies: req.params.movieId } }, // Ensure movieId is removed from FavoriteMovies array
+      { $pull: { favoriteMovies: req.params.movieId } }, // Ensure movieId is removed from favoriteMovies array
       { new: true }
     )
       .then((updatedUser) => {
