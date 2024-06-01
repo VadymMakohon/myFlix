@@ -220,7 +220,6 @@ app.get(
   async (req, res) => {
     await Movies.find()
       .then((movies) => {
-        console.log(movies)
         res.status(201).json(movies);
       })
       .catch((err) => {
@@ -246,14 +245,14 @@ app.get(
   }
 );
 
-// // GET movie by ID
+// GET movie by ID
 app.get(
   "/movies/id/:idNumber",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Movies.findOne({ _id: req.params.idNumber })
-      .then((movies) => {
-        res.status(201).json(movies);
+      .then((movie) => {
+        res.status(201).json(movie);
       })
       .catch((err) => {
         console.error(err);
