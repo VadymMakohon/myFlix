@@ -2,20 +2,20 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 let movieSchema = mongoose.Schema({
+    ImgPath: String,
     Title: { type: String, required: true },
     Description: { type: String, required: true },
     Genre: {
-        Name: { type: String, required: true },
-        Description: { type: String, required: true }
+        Name: { String },
+        Description: { String },
     },
     Director: {
-        Name: { type: String, required: true },
-        Bio: { type: String, required: true },
-        Birth: Date,
-        Death: Date
+        Name: { String },
+        Bio: { String },
+        Birth: { type: Date },
+        Death: { type: Date },
     },
-    ImagePath: { type: String, required: true },
-    Featured: Boolean
+    Featured: Boolean,
 });
 
 let userSchema = mongoose.Schema({
@@ -23,7 +23,7 @@ let userSchema = mongoose.Schema({
     Password: { type: String, required: true },
     Email: { type: String, required: true },
     Birthdate: Date,
-    FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
+    FavoriteMovies: [{ type: String, required: true }],
 });
 
 userSchema.statics.hashPassword = (password) => {
@@ -33,8 +33,19 @@ userSchema.methods.validatePassword = function (password) {
     return bcrypt.compareSync(password, this.Password);
 };
 
+let directorSchema = mongoose.Schema({
+    Name: { String },
+    Bio: { String },
+    Birth: { type: Date },
+    Death: { type: Date },
+});
+/**
+ * Defining variables to represent the Movie, User, and Director schemas.
+ */
 let Movie = mongoose.model("Movie", movieSchema);
 let User = mongoose.model("User", userSchema);
+let Director = mongoose.model("Directors", directorSchema);
 
 module.exports.Movie = Movie;
 module.exports.User = User;
+module.exports.Director = Director;

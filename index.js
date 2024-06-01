@@ -97,7 +97,7 @@ app.post(
             Password: hashedPassword,
             Email: req.body.Email,
             Birthdate: req.body.Birthdate,
-            FavoriteMovies: [] // Initialize as an empty array
+            favoriteMovies: [] // Initialize as an empty array
           })
             .then((user) => {
               res.status(201).json(user);
@@ -200,7 +200,7 @@ app.delete(
   async (req, res) => {
     await Users.findOneAndUpdate(
       { Username: req.params.username },
-      { $pull: { favoriteMovies: req.params.movieId } }, // Ensure movieId is removed from favoriteMovies array
+      { $pull: { FavoriteMovies: req.params.movieId } }, // Ensure movieId is removed from FavoriteMovies array
       { new: true }
     )
       .then((updatedUser) => {
@@ -220,6 +220,7 @@ app.get(
   async (req, res) => {
     await Movies.find()
       .then((movies) => {
+        console.log(movies)
         res.status(201).json(movies);
       })
       .catch((err) => {
@@ -245,14 +246,14 @@ app.get(
   }
 );
 
-// GET movie by ID
+// // GET movie by ID
 app.get(
   "/movies/id/:idNumber",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Movies.findOne({ _id: req.params.idNumber })
-      .then((movie) => {
-        res.status(201).json(movie);
+      .then((movies) => {
+        res.status(201).json(movies);
       })
       .catch((err) => {
         console.error(err);
