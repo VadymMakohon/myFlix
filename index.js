@@ -26,6 +26,18 @@ app.use(cors({
   credentials: true // Allow credentials if needed
 }));
 
+// Handle preflight requests for all routes
+app.options('*', cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,6 +46,7 @@ const passport = require("passport");
 require("./passport");
 app.use(express.static("public"));
 app.use(morgan("common"));
+
 const mongoose = require("mongoose");
 const Models = require("./models.js");
 const Movies = Models.Movie;
@@ -41,12 +54,6 @@ const Users = Models.User;
 const Directors = Models.Director;
 const Genres = Models.Genre;
 const { check, validationResult } = require("express-validator");
-
-//Database connection
-// mongoose.connect("mongodb://localhost:27017/cfDB", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
 
 // Connect to MongoDB using Mongoose
 mongoose.connect(process.env.CONNECTION_URI, {
@@ -65,14 +72,6 @@ app.get("/", (req, res) => {
   res.send("Hello and welcome to my movie app!");
 });
 
-//express to return all static files in public folder
-app.use(express.static("public"));
-
-//morgan for logging
-app.use(morgan("common"));
-
-const { title } = require("process");
-const uuid = require("uuid");
 // Import auth routes and apply them
 const authRoutes = require("./auth");
 authRoutes(app);
@@ -401,7 +400,8 @@ app.use(
   "/documentation",
   express.static("public", { index: "documentation.html" })
 );
-// Error handling midleware
+
+// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
