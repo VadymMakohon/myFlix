@@ -22,8 +22,10 @@ app.use(cors({
       return callback(new Error(message), false);
     }
     return callback(null, true);
-  }
+  },
+  credentials: true // Allow credentials if needed
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
