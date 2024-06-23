@@ -39,7 +39,8 @@ app.use(cors({
       return callback(new Error(message), false);
     }
     return callback(null, true);
-  }
+  },
+  credentials: true // Include this if you're dealing with credentials
 }));
 
 app.use(express.json());
