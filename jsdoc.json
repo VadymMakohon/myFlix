@@ -1,0 +1,23 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "source": {
+        "include": [
+            "index.js",
+            "auth.js",
+            "passport.js",
+            "models.js"
+        ],
+        "includePattern": ".js$",
+        "excludePattern": "(node_modules/|docs)"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "opts": {
+        "encoding": "utf8",
+        "destination": "./docs",
+        "recurse": true
+    }
+}
