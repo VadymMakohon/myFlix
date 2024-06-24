@@ -28,6 +28,7 @@ let allowedOrigins = [
   'http://localhost:4200',
   'https://vadymmakohon.github.io',
   'https://vadymmakohon.github.io/myFlix-Angular-client',
+  'https://myflix-2024-e9df13718d8a.herokuapp.com',
   'https://movie-app-777777.netlify.app'
 ];
 
